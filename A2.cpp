@@ -117,7 +117,7 @@ void mergeSort(std::vector<int> &arr, int l, int r) {
 }
 
 void mergeInsertionSort(std::vector<int> &arr, int l, int r,
-                        int threshold_sort = 15) {
+                        int threshold_sort = 50) {
   if (r - l + 1 <= threshold_sort) {
     insertionSort(arr, l, r);
     return;
@@ -127,7 +127,7 @@ void mergeInsertionSort(std::vector<int> &arr, int l, int r,
 
 class SortTester {
 public:
-  static int mergeInsertionTester(std::vector<int> &arr, int thres = 15) {
+  static int mergeInsertionTester(std::vector<int> &arr, int thres = 50) {
     auto start = std::chrono::high_resolution_clock::now();
     mergeInsertionSort(arr, 0, arr.size() - 1, thres);
     auto elapsed = std::chrono::high_resolution_clock::now() - start;
@@ -150,7 +150,7 @@ public:
 void createFirstDataFile() {
   
 
-  std::ofstream outputFile("A2_data_threshold_finder.txt");
+  std::ofstream outputFile("A2_data_threshold_finder_.txt");
 
   outputFile << "Points; Threshold num; Merge+Insert random (msecs); "
                 "Merge+Insert reversed (msecs); "
@@ -159,7 +159,7 @@ void createFirstDataFile() {
 
 
   for (int thres = 10; thres <= 300; thres += 10) {
-    int n = 10000;
+    int n = 100000;
     std::vector<int> randomArr = ArrayGenerator::generateRandomArray(n);
     std::vector<int> reverseSortedArr =
         ArrayGenerator::generateReverseSortedArray(n);
@@ -171,7 +171,7 @@ void createFirstDataFile() {
     long long mergeInsertTime3Sum = 0;
     int numTests = 2;
 
-    // Создаем 5 массивов и записываем средние значения времени
+    // РЎРѕР·РґР°РµРј 5 РјР°СЃСЃРёРІРѕРІ Рё Р·Р°РїРёСЃС‹РІР°РµРј СЃСЂРµРґРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РІСЂРµРјРµРЅРё
     for (int i = 0; i < numTests; ++i) {
 
 
@@ -187,12 +187,12 @@ void createFirstDataFile() {
       mergeInsertTime3Sum += mergeInsert_time_3;
     }
 
-    // Вычисляем среднее время для каждого массива
+    // Р’С‹С‡РёСЃР»СЏРµРј СЃСЂРµРґРЅРµРµ РІСЂРµРјСЏ РґР»СЏ РєР°Р¶РґРѕРіРѕ РјР°СЃСЃРёРІР°
     long long averageMergeInsertTime1 = mergeInsertTime1Sum / numTests;
     long long averageMergeInsertTime2 = mergeInsertTime2Sum / numTests;
     long long averageMergeInsertTime3 = mergeInsertTime3Sum / numTests;
 
-    // Записываем результат в файл
+    // Р—Р°РїРёСЃС‹РІР°РµРј СЂРµР·СѓР»СЊС‚Р°С‚ РІ С„Р°Р№Р»
     outputFile << "10000; " << thres << "; " << averageMergeInsertTime1
                << "; " << averageMergeInsertTime2 << "; "
                << averageMergeInsertTime3 << ";\n";
@@ -200,21 +200,21 @@ void createFirstDataFile() {
 }
 
 void createSecondDataFile() {
-  int n = 10000;
+  int n = 100000;
   std::vector<int> randomArr = ArrayGenerator::generateRandomArray(n);
   std::vector<int> reverseSortedArr =
       ArrayGenerator::generateReverseSortedArray(n);
   std::vector<int> almostSortedArr =
       ArrayGenerator::generateAlmostSortedArray(n);
 
-  std::ofstream outputFile("A2_data_timediff.txt");
+  std::ofstream outputFile("A2_data_timediff_.txt");
 
   outputFile << "Points; Merge random (msecs); Merge reversed (msecs); Merge "
                 "almost sorted (msecs); "
                 "Merge+Insert random (msecs); Merge+Insert reversed (msecs); "
                 "Merge+Insert almost sorted (msecs); \n";
 
-  for (long points = 100; points <= 10000; points += 500) {
+  for (long points = 100; points <= 100000; points += 500) {
     std::vector<int> randomSubArr =
         ArrayGenerator::generateSubArray(randomArr, points);
     std::vector<int> reverseSubArr =
@@ -237,7 +237,7 @@ void createSecondDataFile() {
 }
 
 int main() {
-  //createFirstDataFile();
+  createFirstDataFile();
   createSecondDataFile();
   return 0;
 }
